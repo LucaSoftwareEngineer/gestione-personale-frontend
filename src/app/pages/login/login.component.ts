@@ -1,11 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from './../../services/login.service';
 import { CommonModule } from '@angular/common';
-import { Component, ErrorHandler } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import SecureLS from 'secure-ls';
-import { catchError, throwError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -17,25 +16,24 @@ import { catchError, throwError } from 'rxjs';
 export class Login {
   username: string = '';
   password: string = '';
-  warning: string = '';
   ls = new SecureLS();
 
-  constructor(private router: Router, private loginService: LoginService) {}
+  constructor(
+    private toastr: ToastrService,
+    private router: Router,
+    private loginService: LoginService
+  ) {}
 
   login() {
     let nErr = 0;
 
     if (this.username == '') {
-      this.warning += 'username mancante';
+      this.toastr.warning('username mancante...', 'Attenzione!');
       nErr++;
     }
 
     if (this.password == '') {
-      if (nErr == 0) {
-        this.warning += 'password mancante';
-      } else {
-        this.warning = 'username e password mancanti';
-      }
+      this.toastr.warning('password mancante...', 'Attenzione!');
       nErr++;
     }
 
@@ -45,17 +43,17 @@ export class Login {
         next: (authResponse) => {
           if (authResponse.token != '' && authResponse.token != null) {
             this.ls.set('user', authResponse.token);
+            this.toastr.success(
+              'accesso eseguito correttamente...',
+              'Successo!'
+            );
             this.router.navigate(['/dashboard']);
           }
         },
         error: (authError) => {
-          this.warning = 'Attenzione! username o password errati...';
+          this.toastr.error('username o password errati...', 'Attenzione!');
         },
       });
     }
-  }
-
-  resetWarning() {
-    this.warning = '';
   }
 }

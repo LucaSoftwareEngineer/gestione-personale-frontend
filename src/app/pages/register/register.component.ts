@@ -15,7 +15,6 @@ import { ToastrService } from 'ngx-toastr';
 export class Register {
   username: string = '';
   password: string = '';
-  warning: string = '';
 
   constructor(
     private toastr: ToastrService,
