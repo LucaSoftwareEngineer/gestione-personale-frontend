@@ -21,9 +21,14 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     initFlowbite();
+    this.validationToken();
   }
 
-  validationToken = setInterval(() => {
+  periodicValidationToken = setInterval(() => {
+    this.validationToken();
+  }, 2000);
+
+  validationToken() {
     this.securityService
       .validationToken(this.ls.get('user'))
       .subscribe((json) => {
@@ -31,5 +36,5 @@ export class NavbarComponent implements OnInit {
           this.router.navigate(['/login']);
         }
       });
-  }, 2000);
+  }
 }
