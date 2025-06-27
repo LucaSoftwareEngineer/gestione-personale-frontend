@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { initFlowbite } from 'flowbite';
+import { SecurityService } from '../../services/security.service';
+import SecureLS from 'secure-ls';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +12,24 @@ import { initFlowbite } from 'flowbite';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
+  ls = new SecureLS();
+
+  constructor(
+    private securityService: SecurityService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
     initFlowbite();
   }
+
+  validationToken = setInterval(() => {
+    this.securityService
+      .validationToken(this.ls.get('user'))
+      .subscribe((json) => {
+        if (json.valido == false) {
+          this.router.navigate(['/login']);
+        }
+      });
+  }, 2000);
 }
