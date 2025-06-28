@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
 
   periodicValidationToken = setInterval(() => {
     this.validationToken();
-  }, 2000);
+  }, 40000);
 
   validationToken() {
     this.securityService
