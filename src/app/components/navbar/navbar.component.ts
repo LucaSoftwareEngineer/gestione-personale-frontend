@@ -29,12 +29,15 @@ export class NavbarComponent implements OnInit {
   }, 40000);
 
   validationToken() {
-    this.securityService
-      .validationToken(this.ls.get('user'))
-      .subscribe((json) => {
+    this.securityService.validationToken(this.ls.get('user')).subscribe({
+      next: (json) => {
         if (json.valido == false) {
           this.router.navigate(['/login']);
         }
-      });
+      },
+      error: () => {
+        this.router.navigate(['/login']);
+      },
+    });
   }
 }

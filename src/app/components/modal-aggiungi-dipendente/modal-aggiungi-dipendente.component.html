@@ -1,0 +1,141 @@
+<div
+  id="aggiungi-dipendente-modal"
+  tabindex="-1"
+  aria-hidden="true"
+  class="fixed top-0 right-0 left-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-x-hidden overflow-y-auto md:inset-0"
+>
+  <div class="relative max-h-full w-full max-w-md p-4">
+    <div class="relative rounded-lg bg-white shadow-sm">
+      <div
+        class="flex items-center justify-between rounded-t border-b border-gray-200 p-4 md:p-5"
+      >
+        <h3 class="text-lg font-semibold text-gray-900">Aggiungi Dipendente</h3>
+        <button
+          type="button"
+          id="close-aggiungi-dipendente-modal"
+          class="cursor-pointer ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
+          data-modal-toggle="aggiungi-dipendente-modal"
+        >
+          <svg
+            class="h-3 w-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5">
+        <div class="mb-4 grid grid-cols-2 gap-4">
+          <div class="col-span-2">
+            <label for="nome"
+                   class="mb-2 block text-sm font-medium text-gray-900">Nome</label>
+            <input type="text"
+                   [(ngModel)]="nome"
+                   name="nome"
+                   id="nome"
+                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-primary-600 focus:border-primary-600"
+                   placeholder="Inserisci nome"
+                   required="" />
+          </div>
+          <div class="col-span-2">
+            <label for="cognome"
+                   class="mb-2 block text-sm font-medium text-gray-900">Cognome</label>
+            <input type="text"
+                   [(ngModel)]="cognome"
+                   name="cognome"
+                   id="cognome"
+                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-primary-600 focus:border-primary-600"
+                   placeholder="Inserisci cognome"
+                   required="" />
+          </div>
+          <div class="col-span-2">
+            <label for="dataNascita"
+                   class="mb-2 block text-sm font-medium text-gray-900">Data di nascita</label>
+            <input type="date"
+                   [(ngModel)]="dataNascita"
+                   name="dataNascita"
+                   id="dataNascita"
+                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-primary-600 focus:border-primary-600"
+                   placeholder="Inserisci data di nascita"
+                   required="" />
+          </div>
+          <div class="col-span-2">
+            <label for="dataAssunzione"
+                   class="mb-2 block text-sm font-medium text-gray-900">Data di assunzione</label>
+            <input type="date"
+                   [(ngModel)]="dataAssunzione"
+                   name="dataAssunzione"
+                   id="dataAssunzione"
+                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-primary-600 focus:border-primary-600"
+                   placeholder="Inserisci data di assunzione"
+                   required="" />
+          </div>
+          <div class="col-span-2">
+            <label for="ral"
+                   class="mb-2 block text-sm font-medium text-gray-900">RAL</label>
+            <input type="number"
+                   [(ngModel)]="ral"
+                   name="ral"
+                   id="ral"
+                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-primary-600 focus:border-primary-600"
+                   placeholder="Inserisci RAL in euro"
+                   required="" />
+          </div>
+          <div class="col-span-2">
+            <label for="statoAssunzione"
+                   class="mb-2 block text-sm font-medium text-gray-900">Stato assunzione</label>
+            <div class="flex pt-[2px] pl-[8px]">
+              <div class="w-[30%] text-[14px]">
+                Assunto <input class="ml-[5px]" (click)="setStatoAssunzioneAssunto()" name="statoAssunzione" type="radio" checked />
+              </div>
+              <div class="text-[14px]">
+                Licenziato <input class="ml-[5px]" (click)="setStatoAssunzioneLicenziato()" name="statoAssunzione" type="radio" />
+              </div>
+            </div>
+          </div>
+          @if (statoAssunzione == false) {
+          <div class="col-span-2">
+            <label for="dataLicenziamento"
+                   class="mb-2 block text-sm font-medium text-gray-900">Data di licenziamento</label>
+            <input type="date"
+                   [(ngModel)]="dataLicenziamento"
+                   name="dataLicenziamento"
+                   id="dataLicenziamento"
+                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-primary-600 focus:border-primary-600"
+                   placeholder="Inserisci data di licenziamento" />
+          </div>
+          }
+        </div>
+        <button
+          type="button"
+          (click)="addEmployee()"
+          class="cursor-pointer inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none"
+        >
+          <svg
+            class="-ms-1 me-1 h-5 w-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          Aggiungi il nuovo dipendente
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
